@@ -7,7 +7,7 @@ public class Personatge {
     private int edat;
     private String raça;
 
-    // Derivats 
+    // Derivats
     private int salut;
     private int mana;
 
@@ -29,8 +29,8 @@ public class Personatge {
     }
 
     // Constructor manual
-    public Personatge(String nom, int edat, String raça, int forca, int destresa, int constitucio,  
-    int intelligencia, int saviesa, int carisma) {
+    public Personatge(String nom, int edat, String raça, int força, int destresa, int constitucio,
+            int intelligencia, int saviesa, int carisma) {
         setNom(nom);
         setEdat(edat);
         setRaça(raça);
@@ -40,7 +40,8 @@ public class Personatge {
         setIntelligencia(intelligencia);
         setSaviesa(saviesa);
         setCarisma(carisma);
-        
+        setSalut(carisma);
+        setMana(carisma);
     }
 
     // Constructor automàtic
@@ -49,14 +50,37 @@ public class Personatge {
         setEdat(edat);
         setRaça(raça);
 
-    }
-    
-    // Getters i Settes
+        int[] stats = new int[6];
+        for (int i = 0; i < stats.length; i++) {
+            stats[i] = 5;
 
+            int restants = 30;
+            while (restants > 0) {
+                int j = (int)(Math.random()* 6);
+                if (stats[j] < 20) {
+                    stats[j]++;
+                    restants--;
+                }
+            }
+        }
+
+        setForça(stats[0]);
+        setDestresa(stats[1]);
+        setConstitucio(stats[2]);
+        setIntelligencia(stats[3]);
+        setSaviesa(stats[4]);
+        setCarisma(stats[5]);
+
+        setSalut(constitucio * 50);
+        setMana(intelligencia * 30);
+    }
+
+    // Getters i Settes
     // Nom
     public String getNom() {
         return this.nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -65,81 +89,101 @@ public class Personatge {
     public int getEdat() {
         return this.edat;
     }
-    public void setEdat(int edat) { 
-        this.edat = edat; 
+
+    public void setEdat(int edat) {
+        this.edat = edat;
     }
 
     // Raça
-    public String getraça() { 
-        return this.raça; 
+    public String getraça() {
+        return this.raça;
     }
-    public void setRaça(String raça) { 
-        this.raça = raça; 
+
+    public void setRaça(String raça) {
+        this.raça = raça;
     }
 
     // Força
-    public int  getForça() { 
-        return força; 
+    public int getForça() {
+        return força;
     }
-    public void setForça(int f) { 
-        this.força = Math.max(5, Math.min(20, f)); 
+
+    public void setForça(int f) {
+        this.força = Math.max(5, Math.min(20, f));
     }
 
     // Destresa
-    public int  getDestresa() { 
-        return destresa; 
+    public int getDestresa() {
+        return destresa;
     }
-    public void setDestresa(int d) { 
-        this.destresa = Math.max(5, Math.min(20, d)); 
+
+    public void setDestresa(int d) {
+        this.destresa = Math.max(5, Math.min(20, d));
     }
 
     // Constitució
-    public int  getConstitucio() { 
-        return constitucio; 
+    public int getConstitucio() {
+        return constitucio;
     }
-    public void setConstitucio(int c) { 
-        this.constitucio = Math.max(5, Math.min(20, c)); 
+
+    public void setConstitucio(int c) {
+        this.constitucio = Math.max(5, Math.min(20, c));
     }
 
     // Intel·ligència
-    public int  getIntelligencia() { 
-        return intelligencia; 
+    public int getIntelligencia() {
+        return intelligencia;
     }
-    public void setIntelligencia(int i) { 
-        this.intelligencia = Math.max(5, Math.min(20, i)); 
+
+    public void setIntelligencia(int i) {
+        this.intelligencia = Math.max(5, Math.min(20, i));
     }
 
     // Saviesa
-    public int  getSaviesa() { 
-        return saviesa; 
+    public int getSaviesa() {
+        return saviesa;
     }
-    public void setSaviesa(int s) { 
-        this.saviesa = Math.max(5, Math.min(20, s)); 
+
+    public void setSaviesa(int s) {
+        this.saviesa = Math.max(5, Math.min(20, s));
     }
 
     // Carisma
-    public int  getCarisma() { 
-        return carisma; 
+    public int getCarisma() {
+        return carisma;
     }
-    public void setCarisma(int c) { 
-        this.carisma = Math.max(5, Math.min(20, c)); 
+
+    public void setCarisma(int c) {
+        this.carisma = Math.max(5, Math.min(20, c));
     }
 
     // Salut
-    public int  getSalut() { 
-        return salut; 
+    public int getSalut() {
+        return salut;
     }
-    public void setSalut(int s) { 
-        this.salut = Math.max(0, Math.min(0, Math.min(constitucio * 50, s))); 
+
+    public void setSalut(int s) {
+        this.salut = Math.max(0, Math.min(constitucio * 50, s));
     }
 
     // Mana
-    public int  getMana() { 
-        return mana; 
-    }
-    public void setMana(int m) { 
-        this.mana = Math.max(0, Math.min(intelligencia * 30, m)); 
+    public int getMana() {
+        return mana;
     }
 
+    public void setMana(int m) {
+        this.mana = Math.max(0, Math.min(intelligencia * 30, m));
+    }
+
+    // To String
+    public String toString() {
+        String info = "Nom: " + this.nom + " Edat: " + this.edat + " Raça: " + this.raça + " Força: " + this.força +
+                " Destresa: " + this.destresa + " Constitucio: " + this.constitucio + " Intel·ligència: "
+                + this.intelligencia +
+                " Saviesa: " + this.saviesa + " Carisma: " + this.carisma + " Salut: " + this.salut + " Mana: "
+                + this.mana;
+        return info;
+    }
+    
     
 }
