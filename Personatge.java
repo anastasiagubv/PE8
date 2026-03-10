@@ -193,23 +193,31 @@ public class Personatge {
     }
 
     // Accion i habilitats
-    public void equiparArma(ArrayList<Arma> inventari) {
+    public void equiparArma(int i) {
+        Arma arma = inventari.get(i);
 
+        if (arma.isMagica()) {
+            if (intelligencia < 10) {
+                System.out.println("No tens intel·ligiència suficient.\nIntel·ligiència actual: " + intelligencia);
+            } else {
+                this.armaEquipada = arma;  
+                System.out.println("Arma equipada correctament!");
+            }
+        } else {
+            this.armaEquipada = arma;
+            System.out.println("Arma equipada correctament!");
+        }
     }
 
-    public double atacar(boolean defensant, double danyArma) {
-        double dany = 0;
+    public double atacar( ) {
+        double atacTotal = 0;
 
-        if (defensant = true) {
-            for (int i = 0; i < inventari.size(); i++) {
-                if (i == 0) {
-                    dany = dany * (1 + danyArma) / 100;
-                }
-            }
+        if () {
+            
         } else {
 
         }
-        return dany;
+        return atacTotal;
     }
 
     public void defensar(double dany) {
