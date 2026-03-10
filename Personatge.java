@@ -162,7 +162,7 @@ public class Personatge {
         return salut;
     }
 
-    public void setSalut(int s) {
+    public void setSalut(double s) {
         this.salut = Math.max(0, Math.min(constitucio * 50, s));
     }
 
@@ -171,8 +171,16 @@ public class Personatge {
         return mana;
     }
 
-    public void setMana(int m) {
+    public void setMana(double m) {
         this.mana = Math.max(0, Math.min(intelligencia * 30, m));
+    }
+
+    public boolean isDefensant() {
+        return this.defensant;
+    }
+
+    public void setDefensant(boolean defensant) {
+        this.defensant = defensant;
     }
 
     @Override
@@ -200,7 +208,7 @@ public class Personatge {
             if (intelligencia < 10) {
                 System.out.println("No tens intel·ligiència suficient.\nIntel·ligiència actual: " + intelligencia);
             } else {
-                this.armaEquipada = arma;  
+                this.armaEquipada = arma;
                 System.out.println("Arma equipada correctament!");
             }
         } else {
@@ -209,38 +217,53 @@ public class Personatge {
         }
     }
 
-    public double atacar( ) {
-        double atacTotal = 0;
+    public double atacar(Personatge enemic) {
+        double dany = 0;
 
-        if () {
-            
+        if (armaEquipada == null) {
+            dany = força * (1 + 0.0 / 100);
+        } else if (!armaEquipada.isMagica()) {
+            dany = força * (1 + armaEquipada.getDany() / 100);
         } else {
-
+            dany = armaEquipada.getDany() * intelligencia / 100;
         }
-        return atacTotal;
-    }
 
-    public void defensar(double dany) {
-
-    }
-
-    public void canviaArma() {
-
-    }
-
-    public void regenarVida() {
-
-    }
-
-    public void regenarMana() {
-
-    }
-
-    public boolean esquivar() {
-
+        enemic.rebreDanyAtac(dany);
+        return dany;
     }
 
     public void rebreDanyAtac(double dany) {
+        if (esquivar()) {
+            return;
+        }
+        if (this.isDefensant()) {
+            dany = dany / 2;
+        }
 
+        this.setSalut(this.getSalut() - dany);
+    }
+
+    public boolean esquivar() {
+        boolean esquivar = false;
+
+        double probabilitat = (destresa - 5) * 3.33;
+        int numRandom = (int) (Math.random() * 100) + 1;
+
+        if (numRandom < probabilitat) {
+            esquivar = true;
+        }
+        return esquivar;
+    }
+
+    public void defensar() {
+        this.defensant = true;
+    }
+
+    public void regenarVida() {
+        setSalut(salut + constitucio * 3);
+    }
+
+    public void regenarMana() {
+        setMana(mana + intelligencia * 2);
     }
 }

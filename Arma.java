@@ -22,6 +22,7 @@ public class Arma {
     public String getNom() {
         return this.nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -30,6 +31,7 @@ public class Arma {
     public TipusArma getTipus() {
         return this.tipus;
     }
+
     public void setTipus(TipusArma tipus) {
         this.tipus = tipus;
     }
@@ -38,6 +40,7 @@ public class Arma {
     public boolean isMagica() {
         return this.magica;
     }
+
     public void setMagica(boolean magica) {
         this.magica = magica;
     }
@@ -46,14 +49,15 @@ public class Arma {
     public double getDany() {
         return this.dany;
     }
+
     public void setDany(double dany) {
         this.dany = Math.max(1, Math.min(100, dany)); // entre 1 i 100
     }
 
     @Override
     public String toString() {
-        return nom + " | Tipus: " + tipus + 
-               " | Dany: " + dany + 
-               " | Màgica: " + (magica ? "Sí" : "No");
+        return nom + " | Tipus: " + tipus +
+                " | Dany: " + dany +
+                " | Màgica: " + (magica ? "Sí" : "No");
     }
 }
