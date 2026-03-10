@@ -8,8 +8,8 @@ public class Personatge {
     private String raça;
 
     // Derivats
-    private int salut;
-    private int mana;
+    private double salut;
+    private double mana;
 
     // Característiques
     private int força;
@@ -27,7 +27,7 @@ public class Personatge {
     public Personatge() {
 
     }
-
+    
     // Constructor manual
     public Personatge(String nom, int edat, String raça, int força, int destresa, int constitucio,
             int intelligencia, int saviesa, int carisma) {
@@ -76,11 +76,11 @@ public class Personatge {
     }
 
     // Getters i Settes
+
     // Nom
     public String getNom() {
         return this.nom;
     }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -89,7 +89,6 @@ public class Personatge {
     public int getEdat() {
         return this.edat;
     }
-
     public void setEdat(int edat) {
         this.edat = edat;
     }
@@ -98,7 +97,6 @@ public class Personatge {
     public String getraça() {
         return this.raça;
     }
-
     public void setRaça(String raça) {
         this.raça = raça;
     }
@@ -107,7 +105,6 @@ public class Personatge {
     public int getForça() {
         return força;
     }
-
     public void setForça(int f) {
         this.força = Math.max(5, Math.min(20, f));
     }
@@ -116,7 +113,6 @@ public class Personatge {
     public int getDestresa() {
         return destresa;
     }
-
     public void setDestresa(int d) {
         this.destresa = Math.max(5, Math.min(20, d));
     }
@@ -125,7 +121,6 @@ public class Personatge {
     public int getConstitucio() {
         return constitucio;
     }
-
     public void setConstitucio(int c) {
         this.constitucio = Math.max(5, Math.min(20, c));
     }
@@ -134,7 +129,6 @@ public class Personatge {
     public int getIntelligencia() {
         return intelligencia;
     }
-
     public void setIntelligencia(int i) {
         this.intelligencia = Math.max(5, Math.min(20, i));
     }
@@ -143,7 +137,6 @@ public class Personatge {
     public int getSaviesa() {
         return saviesa;
     }
-
     public void setSaviesa(int s) {
         this.saviesa = Math.max(5, Math.min(20, s));
     }
@@ -152,38 +145,77 @@ public class Personatge {
     public int getCarisma() {
         return carisma;
     }
-
     public void setCarisma(int c) {
         this.carisma = Math.max(5, Math.min(20, c));
     }
 
     // Salut
-    public int getSalut() {
+    public double getSalut() {
         return salut;
     }
-
     public void setSalut(int s) {
         this.salut = Math.max(0, Math.min(constitucio * 50, s));
     }
 
     // Mana
-    public int getMana() {
+    public double getMana() {
         return mana;
     }
-
     public void setMana(int m) {
         this.mana = Math.max(0, Math.min(intelligencia * 30, m));
     }
 
     // To String
     public String toString() {
-        String info = "Nom: " + this.nom + " Edat: " + this.edat + " Raça: " + this.raça + " Força: " + this.força +
+        return "Nom: " + this.nom + " Edat: " + this.edat + " Raça: " + this.raça + " Força: " + this.força +
                 " Destresa: " + this.destresa + " Constitucio: " + this.constitucio + " Intel·ligència: "
                 + this.intelligencia +
                 " Saviesa: " + this.saviesa + " Carisma: " + this.carisma + " Salut: " + this.salut + " Mana: "
                 + this.mana;
-        return info;
     }
     
-    
+
+    // Accion i habilitats
+    public void equiparArma(ArrayList<Arma> inventari) {
+
+    }
+
+    public double atacar(boolean defensant, double danyArma) {
+        double dany = 0;
+        
+        if (defensant = true) {
+            for (int i = 0; i < inventari.size(); i++) {
+                if (i == 0) {
+                    dany = dany * (1 + danyArma) / 100;
+                }
+            }
+        } else {
+
+        }
+        return dany;
+    }
+
+    public void defensar(double dany) {
+
+    }
+
+    public void canviaArma() {
+
+    }
+
+    public void regenarVida() {
+
+    }
+
+    public void regenarMana() {
+
+    }
+
+    public boolean esquivar() {
+        
+    }
+
+    public void rebreDanyAtac(double dany) {
+
+    }
 }
