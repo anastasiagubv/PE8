@@ -11,6 +11,10 @@ public class Personatge {
     private double salut;
     private double mana;
 
+    // Atribut adicional
+    private int nivell;
+    private int experiencia;
+
     // Característiques
     private int força;
     private int destresa;
@@ -30,7 +34,7 @@ public class Personatge {
 
     // Constructor manual
     public Personatge(String nom, int edat, String raça, int força, int destresa, int constitucio,
-            int intelligencia, int saviesa, int carisma) {
+            int intelligencia, int saviesa, int carisma, int nivell, int experiencia) {
         setNom(nom);
         setEdat(edat);
         setRaça(raça);
@@ -42,6 +46,10 @@ public class Personatge {
         setCarisma(carisma);
         setSalut(carisma);
         setMana(carisma);
+
+        // Adicionals
+        this.nivell = 1;
+        this.experiencia = 0;
     }
 
     // Constructor automàtic
@@ -175,12 +183,31 @@ public class Personatge {
         this.mana = Math.max(0, Math.min(intelligencia * 30, m));
     }
 
+    // Defensant
     public boolean isDefensant() {
         return this.defensant;
     }
 
     public void setDefensant(boolean defensant) {
         this.defensant = defensant;
+    }
+
+    // Atribut adicional - Nivell
+    public int getNivell() {
+        return this.nivell;
+    }
+
+    public void setNivell(int nivell) {
+        this.nivell = nivell;
+    }
+
+    // Atribut adicional - Experiencia
+    public int getExperiencia() {
+        return this.experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
     }
 
     @Override
@@ -197,6 +224,8 @@ public class Personatge {
                 "  Intel·ligència: " + intelligencia + "\n" +
                 "  Saviesa:        " + saviesa + "\n" +
                 "  Carisma:        " + carisma + "\n" +
+                "==============================\n" +
+                "  Nivell:         " + nivell + "\n" +
                 "==============================";
     }
 
@@ -232,17 +261,6 @@ public class Personatge {
         return dany;
     }
 
-    public void rebreDanyAtac(double dany) {
-        if (esquivar()) {
-            return;
-        }
-        if (this.isDefensant()) {
-            dany = dany / 2;
-        }
-
-        this.setSalut(this.getSalut() - dany);
-    }
-
     public boolean esquivar() {
         boolean esquivar = false;
 
@@ -259,11 +277,59 @@ public class Personatge {
         this.defensant = true;
     }
 
+    public void rebreDanyAtac(double dany) {
+        if (esquivar()) {
+            return;
+        }
+        if (this.isDefensant()) {
+            dany = dany / 2;
+        }   
+
+        dany = dany * this.negociar();
+        this.setSalut(this.getSalut() - dany);
+    }
+
     public void regenarVida() {
         setSalut(salut + constitucio * 3);
     }
 
     public void regenarMana() {
         setMana(mana + intelligencia * 2);
+    }
+
+    // Mètodes adicionals
+    // Pujar nivell
+    public void guanyarExp(int punts) {
+        experiencia += punts;
+        pujarNivell();
+    }
+
+    public void pujarNivell() {
+        if (experiencia >= nivell * 100) {
+            nivell++;
+            experiencia = 0;
+
+            System.out.println("Has pujat de nivell!" + "\n" + "Nivell actual: " + nivell);
+        }
+    }
+
+    // Negociar combat
+    public double negociar() {
+        double multiplicador = 0;
+
+        if (carisma >= 15) {
+            System.out.println("Veredicte de la negociació." + "\n" + "Rebs un 30% menys de dany.");
+            multiplicador = 0.7;
+        } else if (carisma >= 10) {
+            System.out.println("Veredicte de la negociació." + "\n" + "Rebs un 20% menys de dany.");
+            multiplicador = 0.8;
+        } else if (carisma >= 5) {
+            System.out.println("Veredicte de la negociació." + "\n" + "Rebs un 10% menys de dany.");
+            multiplicador = 0.9;
+        } else {
+            System.out.println("Negociació fallida.");
+            multiplicador = 1.0;
+        }
+        return multiplicador;
     }
 }
