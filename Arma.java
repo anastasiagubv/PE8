@@ -1,6 +1,8 @@
 public class Arma {
+
+    // Atributs
     private String nom;
-    private String tipus;
+    private TipusArma tipus;
     private boolean magica;
     private double dany;
 
@@ -8,13 +10,14 @@ public class Arma {
 
     }
 
-    public Arma(String nom, String tipus, boolean magica, double dany) {
+    public Arma(String nom, TipusArma tipus, boolean magica, double dany) {
         setNom(nom);
-        setTipus(tipus);
+        setTipus(getTipus());
         setMagica(magica);
         setDany(dany);
     }
 
+    // Getters i setters
     // Nom
     public String getNom() {
         return this.nom;
@@ -24,10 +27,10 @@ public class Arma {
     }
 
     // Tipus
-    public String getTipus() {
+    public TipusArma getTipus() {
         return this.tipus;
     }
-    public void setTipus(String tipus) {
+    public void setTipus(TipusArma tipus) {
         this.tipus = tipus;
     }
 
