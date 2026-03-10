@@ -12,7 +12,7 @@ public class Arma {
 
     public Arma(String nom, TipusArma tipus, boolean magica, double dany) {
         setNom(nom);
-        setTipus(getTipus());
+        setTipus(tipus);
         setMagica(magica);
         setDany(dany);
     }
@@ -56,8 +56,15 @@ public class Arma {
 
     @Override
     public String toString() {
+        String tipusMagia;
+        if (isMagica()) {
+            tipusMagia = "Sí";
+        } else {
+            tipusMagia = "No";
+        }
+
         return nom + " | Tipus: " + tipus +
                 " | Dany: " + dany +
-                " | Màgica: " + (magica ? "Sí" : "No");
+                " | Màgica: " + tipusMagia;
     }
 }

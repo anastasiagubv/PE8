@@ -34,7 +34,7 @@ public class Personatge {
 
     // Constructor manual
     public Personatge(String nom, int edat, String raça, int força, int destresa, int constitucio,
-            int intelligencia, int saviesa, int carisma, int nivell, int experiencia) {
+            int intelligencia, int saviesa, int carisma) {
         setNom(nom);
         setEdat(edat);
         setRaça(raça);
@@ -44,8 +44,8 @@ public class Personatge {
         setIntelligencia(intelligencia);
         setSaviesa(saviesa);
         setCarisma(carisma);
-        setSalut(carisma);
-        setMana(carisma);
+        setSalut(constitucio * 50);
+        setMana(intelligencia * 30);
 
         // Adicionals
         this.nivell = 1;
@@ -58,17 +58,14 @@ public class Personatge {
         setEdat(edat);
         setRaça(raça);
 
-        int[] stats = new int[6];
-        for (int i = 0; i < stats.length; i++) {
-            stats[i] = 5;
+        int[] stats = new int[] { 5, 5, 5, 5, 5, 5 };
 
-            int restants = 30;
-            while (restants > 0) {
-                int j = (int) (Math.random() * 6);
-                if (stats[j] < 20) {
-                    stats[j]++;
-                    restants--;
-                }
+        int restants = 30;
+        while (restants > 0) {
+            int j = (int) (Math.random() * 6);
+            if (stats[j] < 20) {
+                stats[j]++;
+                restants--;
             }
         }
 
@@ -230,12 +227,17 @@ public class Personatge {
     }
 
     // Accion i habilitats
+    public void afegirArma(Arma arma) {
+        inventari.add(arma);
+    }
+
     public void equiparArma(int i) {
         Arma arma = inventari.get(i);
 
         if (arma.isMagica()) {
             if (intelligencia < 10) {
-                System.out.println("No tens intel·ligiència suficient.\nIntel·ligiència actual: " + intelligencia);
+                System.out.println(
+                        "No tens intel·ligiència suficient." + "\n" + "Intel·ligiència actual: " + intelligencia);
             } else {
                 this.armaEquipada = arma;
                 System.out.println("Arma equipada correctament!");
@@ -283,7 +285,7 @@ public class Personatge {
         }
         if (this.isDefensant()) {
             dany = dany / 2;
-        }   
+        }
 
         dany = dany * this.negociar();
         this.setSalut(this.getSalut() - dany);
@@ -309,8 +311,15 @@ public class Personatge {
             nivell++;
             experiencia = 0;
 
+            // Pujar nivell carisma
+            carisma = Math.min(20, carisma + 1);
             System.out.println("Has pujat de nivell!" + "\n" + "Nivell actual: " + nivell);
         }
+    }
+
+    public void aplicarMaldicio() {
+        carisma = Math.max(1, carisma - 3);
+        System.out.println(nom + " ha rebut una maledicció! Carisma reduït a " + carisma);
     }
 
     // Negociar combat
