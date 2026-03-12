@@ -5,7 +5,7 @@ public class Personatge {
     // Atributs principals
     private String nom;
     private int edat;
-    private String raça;
+    private TipusRaça raça;
 
     // Derivats
     private double salut;
@@ -33,7 +33,7 @@ public class Personatge {
     }
 
     // Constructor manual
-    public Personatge(String nom, int edat, String raça, int força, int destresa, int constitucio,
+    public Personatge(String nom, int edat, TipusRaça raça, int força, int destresa, int constitucio,
             int intelligencia, int saviesa, int carisma) {
         setNom(nom);
         setEdat(edat);
@@ -53,7 +53,7 @@ public class Personatge {
     }
 
     // Constructor automàtic
-    public Personatge(String nom, int edat, String raça) {
+    public Personatge(String nom, int edat, TipusRaça raça) {
         setNom(nom);
         setEdat(edat);
         setRaça(raça);
@@ -78,6 +78,10 @@ public class Personatge {
 
         setSalut(constitucio * 50);
         setMana(intelligencia * 30);
+
+        // Adicionals
+        this.nivell = 1;
+        this.experiencia = 0;
     }
 
     // Getters i Settes
@@ -100,11 +104,11 @@ public class Personatge {
     }
 
     // Raça
-    public String getraça() {
+    public TipusRaça getraça() {
         return this.raça;
     }
 
-    public void setRaça(String raça) {
+    public void setRaça(TipusRaça raça) {
         this.raça = raça;
     }
 
@@ -223,6 +227,7 @@ public class Personatge {
                 "  Carisma:        " + carisma + "\n" +
                 "==============================\n" +
                 "  Nivell:         " + nivell + "\n" +
+                "  Experiència:    " + experiencia + "\n" +
                 "==============================";
     }
 
@@ -289,6 +294,14 @@ public class Personatge {
 
         dany = dany * this.negociar();
         this.setSalut(this.getSalut() - dany);
+    }
+
+    public boolean estaViu() {
+        return salut > 0;
+    }
+
+    public ArrayList<Arma> getInventari() {
+        return this.inventari;
     }
 
     public void regenarVida() {
