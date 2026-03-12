@@ -125,37 +125,41 @@ public class Joc {
     }
 
     // Crear personatge
-    public void crearPersonatge() {
-        System.out.println("--- Creació de personatge ---");
-        System.out.println("=============================");
+public void crearPersonatge() {
+    System.out.println("--- Creació de personatge ---");
+    System.out.println("=============================");
+    char option = 's';
+    while (personatges.size() < 2 && option != 'n') {
+        String nom = readString("Introdueix el nom: ");
+        int edat = readInteger("Introdueix l'edat: ");
+        String raça = readString("Introdueix la raça: ");
 
-        char option = 's';
-        while (personatges.size() < 2 && option != 'n') {
-            System.out.print("Vols crear el personatge de forma automàtica? (s/n): ");
+        System.out.print("Vols crear el personatge de forma automàtica? (s/n): ");
+        char automatic = sc.next().charAt(0);
 
-            char automatic = sc.next().charAt(0);
-            if (automatic == 's') {
-                String nom = readString("Introdueix el nom:");
-                int edat = readInteger("Introdueix l'edat: ");
-                String raça = readString("Introdueix raça: ");
-                int força = readIntegerInRange("Introdueix força", 5, 20);
-                Personatge personatge = new Personatge(nom, edat, raça);
-                personatges.add(personatge);
+        Personatge personatge;
+        if (automatic == 's') {
+            personatge = new Personatge(nom, edat, raça);
+        } else {
+            int forca = readIntegerInRange("Introdueix força (5-20): ", 5, 20);
+            int destresa = readIntegerInRange("Introdueix destresa (5-20): ", 5, 20);
+            int constitucio = readIntegerInRange("Introdueix constitució (5-20): ", 5, 20);
+            int intelligencia = readIntegerInRange("Introdueix intel·ligència (5-20): ", 5, 20);
+            int saviesa = readIntegerInRange("Introdueix saviesa (5-20): ", 5, 20);
+            int carisma = readIntegerInRange("Introdueix carisma (5-20): ", 5, 20);
+            personatge = new Personatge(nom, edat, raça, forca, destresa, constitucio, intelligencia, saviesa, carisma);
+        }
 
-                System.out.println("Personatge creat correctament!");
-            } else {
-                String nom = readString("Introdueix el nom:");
-                int edat = readInteger("Introdueix l'edat: ");
-                String raça = readString("Introdueix raça: ");
+        personatges.add(personatge);
+        System.out.println("Personatge creat correctament!");
+        System.out.println(personatge);
 
-            }
-
-            
-            
-
-            Personatge personatge = new Personatge();
+        if (personatges.size() < 2) {
+            System.out.print("Vols crear un altre personatge? (s/n): ");
+            option = sc.next().charAt(0);
         }
     }
+}
 
     // Combat
     public void jugarCombat() {
