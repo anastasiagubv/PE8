@@ -39,7 +39,7 @@ public class Joc {
                     break;
 
                 default:
-                    System.out.println("Introdueix una opcio.");
+                    System.out.println("Introdueix una opció.");
                     break;
             }
         } while (option != 3);
@@ -135,42 +135,35 @@ public class Joc {
             int edat = readInteger("Introdueix l'edat: ");
             System.out.println();
 
-            System.out.println("Races disponibles: ");
-            for (int j = 0; j < TipusRaça.values().length; j++) {
-                System.out.println(j + ". " + TipusRaça.values()[j]);
-            }
-            int i = readIntegerInRange("Tria raça (0-3): ", 0, TipusRaça.values().length - 1);
-            TipusRaça raça = TipusRaça.values()[i];
-
             System.out.print("Vols crear el personatge de forma automàtica? (s/n): ");
             char automatic = sc.next().charAt(0);
 
             Personatge personatge = null;
             if (automatic == 's') {
-                personatge = new Personatge(nom, edat, raça);
+                personatge = menuRaça(nom, edat, 0, 0, 0, 0, 0, 0, true);
             } else {
                 int suma = 0;
+                int forca = 0, destresa = 0, constitucio = 0, intelligencia = 0, saviesa = 0, carisma = 0;
                 do {
-                    int forca = readIntegerInRange("Introdueix força (5-20): ", 5, 20);
-                    int destresa = readIntegerInRange("Introdueix destresa (5-20): ", 5, 20);
-                    int constitucio = readIntegerInRange("Introdueix constitució (5-20): ", 5, 20);
-                    int intelligencia = readIntegerInRange("Introdueix intel·ligència (5-20): ", 5, 20);
-                    int saviesa = readIntegerInRange("Introdueix saviesa (5-20): ", 5, 20);
-                    int carisma = readIntegerInRange("Introdueix carisma (5-20): ", 5, 20);
-                    personatge = new Personatge(nom, edat, raça, forca, destresa, constitucio, intelligencia, saviesa,
-                            carisma);
-
+                    forca = readIntegerInRange("Introdueix força (5-20): ", 5, 20);
+                    destresa = readIntegerInRange("Introdueix destresa (5-20): ", 5, 20);
+                    constitucio = readIntegerInRange("Introdueix constitució (5-20): ", 5, 20);
+                    intelligencia = readIntegerInRange("Introdueix intel·ligència (5-20): ", 5, 20);
+                    saviesa = readIntegerInRange("Introdueix saviesa (5-20): ", 5, 20);
+                    carisma = readIntegerInRange("Introdueix carisma (5-20): ", 5, 20);
+                    
                     suma = forca + destresa + constitucio + intelligencia + saviesa + carisma;
+
                     if (suma != 60) {
                         System.out.println("La suma de tots els stats ha de ser 60.");
                     }
                 } while (suma != 60);
+                personatge = menuRaça(nom, edat, forca, destresa, constitucio, intelligencia, saviesa, carisma, false);
             }
 
             personatges.add(personatge);
             System.out.println("Personatge creat correctament!");
             System.out.println(personatge);
-
             personatge.afegirArma(new Arma("Espasa", TipusArma.ESPASA, false, 50));
             personatge.afegirArma(new Arma("Basto Magic", TipusArma.BASTO, true, 80));
 
@@ -181,7 +174,48 @@ public class Joc {
         }
     }
 
-    // Combat
+    public Personatge menuRaça(String nom, int edat, int forca, int destresa, int constitucio, int intelligencia, 
+        int saviesa, int carisma, boolean automatic) {
+        int option = 0;
+
+        System.out.println("1. Humà");
+        System.out.println("2. Elf");
+        System.out.println("3. Orc");
+        System.out.println("4. Nan");
+        option = readIntegerInRange("Introdueix raça (1-4): ", 1, 4);
+
+        Personatge personatge = null;
+        if (automatic) {
+            switch (option) {
+                case 1:
+                    personatge = new Huma(nom, edat); break;
+                case 2:
+                    personatge = new Elf(nom, edat); break;
+                case 3:
+                    personatge = new Orc(nom, edat); break;
+                case 4:
+                    personatge = new Nan(nom, edat); break;
+                default:
+                    System.out.println("Introdueix una opció."); break;
+            }
+        } else {
+            switch (option) {
+                case 1:
+                    personatge = new Huma(nom, edat, forca, destresa, constitucio, intelligencia, saviesa, carisma); break;
+                case 2:
+                    personatge = new Elf(nom, edat, forca, destresa, constitucio, intelligencia, saviesa, carisma); break;
+                case 3:
+                    personatge = new Orc(nom, edat, forca, destresa, constitucio, intelligencia, saviesa, carisma); break;
+                case 4:
+                    personatge = new Nan(nom, edat, forca, destresa, constitucio, intelligencia, saviesa, carisma); break;
+                default:
+                    System.out.println("Introdueix una opció.");
+                    break;
+            }   
+        }
+        return personatge;
+    }
+
     // Combat
     public void jugarCombat() {
         System.out.println("--- Combat 1 VS 1 ---");

@@ -5,7 +5,6 @@ public class Personatge {
     // Atributs principals
     private String nom;
     private int edat;
-    private TipusRaça raça;
 
     // Derivats
     private double salut;
@@ -33,11 +32,10 @@ public class Personatge {
     }
 
     // Constructor manual
-    public Personatge(String nom, int edat, TipusRaça raça, int força, int destresa, int constitucio,
+    public Personatge(String nom, int edat, int força, int destresa, int constitucio,
             int intelligencia, int saviesa, int carisma) {
         setNom(nom);
         setEdat(edat);
-        setRaça(raça);
         setForça(força);
         setDestresa(destresa);
         setConstitucio(constitucio);
@@ -53,10 +51,9 @@ public class Personatge {
     }
 
     // Constructor automàtic
-    public Personatge(String nom, int edat, TipusRaça raça) {
+    public Personatge(String nom, int edat) {
         setNom(nom);
         setEdat(edat);
-        setRaça(raça);
 
         int[] stats = new int[] { 5, 5, 5, 5, 5, 5 };
 
@@ -101,15 +98,6 @@ public class Personatge {
 
     public void setEdat(int edat) {
         this.edat = edat;
-    }
-
-    // Raça
-    public TipusRaça getraça() {
-        return this.raça;
-    }
-
-    public void setRaça(TipusRaça raça) {
-        this.raça = raça;
     }
 
     // Força
@@ -211,10 +199,15 @@ public class Personatge {
         this.experiencia = experiencia;
     }
 
+    // Arma equipada
+    public Arma getArmaEquipada() {
+        return this.armaEquipada;
+    }
+
     @Override
     public String toString() {
         return "==============================\n" +
-                "  " + nom + " (" + raça + ", " + edat + " anys)\n" +
+                "  " + nom + " (" + edat + " anys)\n" +
                 "==============================\n" +
                 "  Salut:          " + salut + "\n" +
                 "  Maná:           " + mana + "\n" +
